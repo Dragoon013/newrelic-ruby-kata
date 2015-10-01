@@ -8,7 +8,7 @@
     </div>
     <div class="col-md-5">
       <div>
-        <a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><!-- <img style="margin-left: 35%;" class="hvr-fade" src="/assets/twitter-space.png"> -->
+        <a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
         </a>
         <h2 style="color: white;">Where is the ISS right now?</h2>
         <p style="color: white;">
@@ -19,13 +19,16 @@
 
         </iframe>
         <img class="map-image" src="/assets/icon-iss.png"></img>
-        <h3 style="color: white;">The ISS will pass overhead in:</h3>
+        <div>
+          <h3 class="caption2 hvr-fade">The ISS will pass overhead in:</h3>
+        </div>
+
       </div>
     </div>
   </div>
 
   <div class="imageHolder a">
-    <img src="/assets/astronaut.png" alt="" />
+    <img class="space-img" src="/assets/astronaut.png" alt="" />
     <div class="caption">Name of Astronaut
     </div>
   </div>
@@ -39,6 +42,9 @@
       width: 200px;
       height: 200px;
       margin: 5px;
+    }
+    .space-img{
+      max-height: 200px;
     }
     .caption {
       position: relative;
@@ -62,10 +68,13 @@
     .map-image {
       z-index: 1000;
     }
-
-    .twitter-space{
-      position: fixed;
-      /*width: 450px;*/
+    .caption2 {
+      width: 100%;
+      height: 60px;
+      padding: 15px;
+      background-color: white;
+      opacity: 0.6;
+      filter: alpha(opacity=40); /* For IE8 and earlier */
     }
     .hvr-fade {
       display: inline-block;
@@ -81,14 +90,10 @@
       transition-duration: 0.3s;
       -webkit-transition-property: color, background-color;
       transition-property: color, background-color;
-      opacity: 0.7;
-      filter: alpha(opacity=40); /* For IE8 and earlier */
     }
     .hvr-fade:hover, .hvr-fade:focus, .hvr-fade:active {
-      /*background-color: #2098d1;*/
+      background-color: #5865cd;
       color: white;
-      opacity: 1.0;
-    filter: alpha(opacity=40); /* For IE8 and earlier */
     }
   </style>
 
@@ -143,6 +148,9 @@
 <% end %>
 
 <!--
+
+Kata Name Idea: Many Calls to View the Sky
+===============
 
 EvalError: Raised when the eval() functions is used in an incorrect manner.
 
