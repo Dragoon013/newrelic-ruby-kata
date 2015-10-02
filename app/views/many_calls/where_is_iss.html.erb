@@ -1,0 +1,92 @@
+<div class="stars">
+  <div class="row">
+    <div>
+      <h2>Where is the ISS right now?</h2>
+      <p>
+        This data is from the <a href="http://open-notify.org/Open-Notify-API/">ISS</a> API showing you where the ISS is at this very moment.
+      </p>
+      <div class="location">
+      </div>
+      <button class="updateLocation">Update ISS</button>
+      <img class="map-image" src="/assets/icon-iss.png"></img>
+      <div>
+        <h3 class="caption2 hvr-fade">The ISS will pass overhead in:</h3>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/html" id="template-astronaut">
+    <div class="imageHolder a">
+      <img class="space-img" src="/assets/astronaut.png" alt="" />
+      <div class="caption"></div>
+    </div>
+  </script>
+</div>
+
+
+<% content_for :footer do %>
+  <script>
+    function overheadPasses(latitude, longitude) {
+      $.getJSON('http://api.open-notify.org/iss-pass.json?lat=' + latitude + '&lon=' + longitude + '&alt=20&n=5&callback=?', function(data) {
+        data['response'].forEach(function (d) {
+          var date = new Date(d['risetime']*1000);
+           console.log(date)
+        });
+      });
+    }
+
+    function drawISSLocation() {
+      $.getJSON('http://api.open-notify.org/iss-now.json?callback=?', function(data) {
+        var zoomlevel = 3;
+        var latitude = data['iss_position']['latitude'];
+        var longitude = data['iss_position']['longitude'];
+
+        var img = new Image();
+        img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=" + zoomlevel + "&size=900x600&sensor=false";
+        $('.location').html(img)
+      });
+    }
+
+    function drawOverheadPasses() {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var latitude  = position.coords.latitude;
+          var longitude = position.coords.longitude;
+
+          overheadPasses(latitude, longitude);
+        }, function () {
+          console.log("geolocating failed", args);
+        });
+      } else {
+        console.log("geolocation not available")
+      }
+    }
+
+    $(document).ready(function() {
+      drawISSLocation();
+      drawOverheadPasses();
+
+      $('.updateLocation').on('click', drawISSLocation);
+    });
+  </script>
+
+<% end %>
+
+<!--
+
+Kata Name Idea: Many Calls to View the Sky
+===============
+
+EvalError: Raised when the eval() functions is used in an incorrect manner.
+
+RangeError: Raised when a numeric variable exceeds its allowed range.
+
+ReferenceError: Raised when an invalid reference is used.
+
+SyntaxError: Raised when a syntax error occurs while parsing JavaScript code.
+
+TypeError: Raised when the type of a variable is not as expected.
+
+URIError: Raised when the encodeURI() or decodeURI() functions are used in an incorrect manner.
+
+-->

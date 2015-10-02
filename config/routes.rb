@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   get "many_assets/display/:id" => "many_assets#display"
   get "errors" => "errors#index"
   get "errors/ajax" => "errors#ajax"
-  get "whos_in_space" => "whos_in_space#index"
+  get "many_calls" => "many_calls#whos_in_space"
+  get "many_calls/where_is_iss" => "many_calls#where_is_iss"
 
   root :to => "home#index"
 end
