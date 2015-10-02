@@ -4,46 +4,53 @@
       <h2>Where is the ISS right now?</h2>
       <p>
         This data is from the <a href="http://open-notify.org/Open-Notify-API/">ISS</a> API showing you where the ISS is at this very moment.
+        <button class="updateLocation">Update ISS</button>
       </p>
       <div class="location">
+        <div class="map"></div>
+        <img class="map-image" src="/assets/icon-iss.png"></img>
       </div>
-      <button class="updateLocation">Update ISS</button>
-      <img class="map-image" src="/assets/icon-iss.png"></img>
-      <div>
-        <h3 class="caption2 hvr-fade">The ISS will pass overhead in:</h3>
+      <div class="overhead">
+        <h3 class="caption2 hvr-fade">The ISS will pass over your head on:</h3>
+        <ul class="passes"></ul>
       </div>
     </div>
   </div>
-
-  <script type="text/html" id="template-astronaut">
-    <div class="imageHolder a">
-      <img class="space-img" src="/assets/astronaut.png" alt="" />
-      <div class="caption"></div>
-    </div>
-  </script>
 </div>
-
 
 <% content_for :footer do %>
   <script>
+    var map;
+
     function overheadPasses(latitude, longitude) {
-      $.getJSON('http://api.open-notify.org/iss-pass.json?lat=' + latitude + '&lon=' + longitude + '&alt=20&n=5&callback=?', function(data) {
+      $.getJSON("/api/overhead?latitude=" + latitude + "&longitude=" + longitude, function(data) {
         data['response'].forEach(function (d) {
-          var date = new Date(d['risetime']*1000);
-           console.log(date)
+          var date = new Date(d["risetime"]*1000);
+          $(".overhead .passes").append("<li>" + date.toLocaleString() + "</li>");
         });
       });
     }
 
     function drawISSLocation() {
-      $.getJSON('http://api.open-notify.org/iss-now.json?callback=?', function(data) {
-        var zoomlevel = 3;
-        var latitude = data['iss_position']['latitude'];
-        var longitude = data['iss_position']['longitude'];
+      $.getJSON("/api/location", function(data) {
+        var latitude = data["iss_position"]["latitude"];
+        var longitude = data["iss_position"]["longitude"];
 
-        var img = new Image();
-        img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=" + zoomlevel + "&size=900x600&sensor=false";
-        $('.location').html(img)
+        // Create a map object and specify the DOM element for display.
+        window.map = new google.maps.Map($('.location .map')[0], {
+          center: {lat: latitude, lng: longitude},
+          mapTypeId: google.maps.MapTypeId.SATELLITE,
+          scrollwheel: false,
+          zoom: 4
+        });
+      });
+    }
+
+    function centerISS() {
+      $.getJSON("/api/location", function(data) {
+        var latitude = data["iss_position"]["latitude"];
+        var longitude = data["iss_position"]["longitude"];
+        window.map.panTo({lat: latitude, lng: longitude});
       });
     }
 
@@ -63,11 +70,13 @@
     }
 
     $(document).ready(function() {
-      drawISSLocation();
       drawOverheadPasses();
 
-      $('.updateLocation').on('click', drawISSLocation);
+      $(".updateLocation").on("click", centerISS);
     });
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACLKUzrOI-8UQgbMLxGKEKYf9ikznOxNg&callback=drawISSLocation">
   </script>
 
 <% end %>

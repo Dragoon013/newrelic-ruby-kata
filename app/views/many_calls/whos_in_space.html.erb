@@ -61,11 +61,11 @@
     }
 
     function drawAstronauts() {
-      $.getJSON('http://api.open-notify.org/astros.json?callback=?', function(data) {
-        data['people'].forEach(function (person) {
-          var template = $($('#template-astronaut').html());
-          $('.caption', template).text(person.name);
-          $('.stars').append(template);
+      $.getJSON("/api/astronauts", function(data) {
+        data["people"].forEach(function (person) {
+          var template = $($("#template-astronaut").html());
+          $(".caption", template).text(person.name);
+          $(".stars").append(template);
           animateDiv($(template));
         });
       });

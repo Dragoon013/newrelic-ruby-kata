@@ -11,5 +11,11 @@ Rails.application.routes.draw do
   get "many_calls" => "many_calls#whos_in_space"
   get "many_calls/where_is_iss" => "many_calls#where_is_iss"
 
+  scope :api do
+    get "astronauts" => "many_calls#astronauts"
+    get "overhead" => "many_calls#overhead"
+    get "location" => "many_calls#location"
+  end
+
   root :to => "home#index"
 end

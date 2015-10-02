@@ -23,9 +23,10 @@
 .whos_in_space{
   background-image: url('/assets/stars.jpg');
 }
-.location {
-  height: 300px;
+.location, .location .map {
+  height: 500px;
   width: 100%;
+  position: relative;
 }
 /* for the astronaut container*/
 .iss {
@@ -35,7 +36,11 @@
   z-index: 1000;
 }
 .map-image {
-  z-index: 1000;
+  z-index: 1;
+  margin-left: 45%;
+  position: absolute;
+  top: 231px;
+  left: 0px;
 }
 .caption2 {
   width: 100%;
