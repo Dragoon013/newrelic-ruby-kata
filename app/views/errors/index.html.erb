@@ -15,20 +15,37 @@
 </div>
 <hr class="tallhr4">
 <div class="lcars-row spaced">
-	<div class="lcars-column u-2-8">
+	<div class="lcars-column u-1-8">
 		<!-- <hr class="tallhr2"> -->
 		<ul class="lcars-menu">
-		  <li class="lcars-tan-bg">Testing Large 2</li>
-		  <li class="lcars-blue-bg tall">Testing 3</li>
-		  <li class="lcars-tan-bg">Testing 4</li>
+		  <li class="lcars-tan-bg">SCAN 4</li>
+		  <li class="lcars-tan-bg">SCAN 2</li>
+		  <li class="lcars-blue-bg tall">SCAN 3</li>
 		</ul>
 	</div>
 	<div class="lcars-column u-1-8">
+		<!-- <hr class="tallhr2"> -->
 		<ul class="lcars-menu">
-		  <li class="lcars-tan-bg">Testing 6</li>
-		  <li class="lcars-tan-bg large-gap">Testing 7</li>
-		  <li class="lcars-blue-bg tall">Testing Large 8</li>
+			<li class="lcars-blue-bg tall">SCAN 3</li>
+		  <li class="lcars-tan-bg">SCAN 4</li>
+		  <li class="lcars-tan-bg">SCAN 2</li>
 		</ul>
+	</div>
+	<div class="lcars-column u-1-8">
+		<ul class="lcars-menu" onclick="bp()">
+		  <li class="lcars-tan-bg" onclick="bp()">GRID ALPHA</li>
+		  <li class="lcars-tan-bg large-gap" onclick="bp()">SEARCH A33</li>
+		  <li class="lcars-blue-bg tall" onclick="bp()">PATTERN 4432</li>
+		</ul>
+	</div>
+	<div class="lcars-column u-5-8">
+		<div >
+		<img id="green" class="star-view" src="/assets/stars2.jpg">
+		</div>
+		<!-- <div id="green" style="background-color: #c0ffc0; width: auto; height: 5em; border: thin solid gray; margin-top: .5em; margin-left: 16px;">
+		</div> -->
+		<div id="red" class="star-view" style="background-color: #ffc0c0; width: 700px; height: 200px; border: thin solid gray; margin-top: .05em; margin-left: 5px;">
+		</div>
 	</div>
 </div>
 
@@ -62,19 +79,19 @@
 		  	<hr class="tallhr4">
 		    <div class="lcars-column u-2-8" style="margin-left: 4em;">
           <a href="#" class="lcars-button radius" onclick="randomNumber1()">
-            Button 1
+            ALPHA
             <span class="lcars-button-addition" id="number1"></span>
           </a>
         </div>
         <div class="lcars-column u-2-8">
           <a href="#" class="lcars-button radius" onclick="randomNumber2()">
-            Button 1
+            GAMMA
             <span class="lcars-button-addition"id="number2"></span>
           </a>
         </div>
         <div class="lcars-column u-2-8">
           <a href="#" class="lcars-button radius" onclick="randomNumber3()">
-            Button 1
+            DELTA
             <span class="lcars-button-addition"id="number3"></span>
           </a>
         </div>
@@ -160,7 +177,28 @@
 	    function randomNumber3() {
 	        var x = Math.floor((Math.random() * 200) + 1);
 	        document.getElementById("number3").innerHTML = x;
+
 	    };
+
+	    function bp() {
+	      jQuery('#green').hide();
+	      jQuery('#red').hide();
+	      r = Math.random() * 2.0;
+	      jQuery.ajax("/errors/ajax?p=" + r, {
+	        success: function (data,status) {
+	          jQuery('#green').show();
+	        },
+	        complete: function (xhr,status) {
+	          if (status != "success") {
+	            jQuery('#red').show();
+	          }
+	        }
+	      });
+	    }
+	    jQuery().ready(function () {
+	      jQuery('#green').hide();
+	      jQuery('#red').hide();
+	    });
 
 	    $(document).ready( function(){
 	      randomNumber1();

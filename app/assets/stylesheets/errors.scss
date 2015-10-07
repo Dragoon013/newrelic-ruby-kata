@@ -21,6 +21,13 @@
 .errors{
   background: black;
 }
+.star-view {
+  width: 700px;
+  height: auto;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1000;
+}
 
 #source-div {
   float: right;
