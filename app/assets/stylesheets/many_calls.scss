@@ -69,16 +69,11 @@
   background-color: #5865cd;
   color: white;
 }
-.clearfix:after {
- visibility: hidden;
- display: block;
- font-size: 0;
- content: " ";
- clear: both;
- height: 0;
+
+.iss-overhead{
+  position: absolute;
+  margin-left: 60%;
+  margin-right: 5%;
+  margin-top: 20%;
+  background-color: rgba(219,219,222,0.6);
 }
-.clearfix { display: inline-block; }
-/* start commented backslash hack \*/
-* html .clearfix { height: 1%; }
-.clearfix { display: block; }
-/* close commented backslash hack */
